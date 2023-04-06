@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{table.name}}{% endblock %}
+
+
+{% block body %}
+<div id="game" data-table="{{table.id}}" data-game="{{game.id}}">
+<h1>{{table.name}}</h1>
+</div>
+<div id="dealer-container"></div>
+<div class="players-container">
+    <div class="hand"><button class="playButton" type="button">Jouer</button></div>
+    <div class="hand"><button class="playButton" type="button">Jouer</button></div>
+    <div class="hand"><button class="playButton" type="button">Jouer</button></div>
+    <div class="hand"><button class="playButton" type="button">Jouer</button></div>
+    <div class="hand"><button class="playButton" type="button">Jouer</button></div>
+</div>
+{% endblock %}

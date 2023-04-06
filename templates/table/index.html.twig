@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TableController!{% endblock %}
+
+{% block body %}
+    {% for table in tables%}
+        <div>
+            <p>{{table.name}}</p>
+            <p>{{table.minBet}}</p>
+            <p>{{table.maxBet}}</p>
+            <p>{{table.nbDecks}}</p>
+            <div>
+                <p><a href="{{path("create_game", {id: table.id}) }}"> Jouer à la table </a></p>
+            </div
+            
+            
+            {% if app.user and is_granted("ROLE_ADMIN")%}
+                <div>
+                    <p><a href="{{path("edit_table", {id: table.id}) }}"> Modifier la table </a></p>
+                    <p><a href="{{path("delete_table", {id: table.id}) }}"> Supprimer la table </a></p>
+                    
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}
