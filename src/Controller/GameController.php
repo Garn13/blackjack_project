@@ -71,15 +71,38 @@ class GameController extends AbstractController
             $game->replaceCardDeck($deck);
             $em->persist($game);
             $hand->setCards($newHand);
+            $calculatedValue = $hand->calculateValue();
+            if ($calculatedValue[1] == "blackjack") {
+                $hand->setValue($calculatedValue[0]);
+                $hand->setStatus("blackjack");
+            } elseif ($calculatedValue[1] === true) {
+                $hand->setValue($calculatedValue[0]);
+                $hand->setStatus("choosing");
+            } else {
+                $hand->setValue($calculatedValue[0]);
+                $hand->setStatus("playing");
+            }
+
             $em->persist($hand);
             $em->flush();
             $id = $hand->getId();
-            $data["$id"] = $newHand;
+            $data["$id"] = [$newHand, $hand->getStatus()];
         }
 
         $dealerHand = new Hand();
         $dealerHand->setUser($userRepository->find(2));
         $dealerHand->setGame($game);
+        $calculatedValue = $hand->calculateValue();
+        if ($calculatedValue[1] == "blackjack") {
+            $dealerHand->setValue($calculatedValue[0]);
+            $dealerHand->setStatus("blackjack");
+        } elseif ($calculatedValue[1] === true) {
+            $dealerHand->setValue($calculatedValue[0]);
+            $dealerHand->setStatus("choosing");
+        } else {
+            $dealerHand->setValue($calculatedValue[0]);
+            $dealerHand->setStatus("playing");
+        }
         $dealerHand->setCreatedAt(new DateTimeImmutable());
         $dealerHand->setUpdatedAt(new DateTimeImmutable());
         $em->persist($dealerHand);
@@ -89,7 +112,7 @@ class GameController extends AbstractController
         array_push($newDealerHand, $deck[0]);
         $dealerHand->setCards($newDealerHand);
         $em->persist($dealerHand);
-        $data["dealer"] = $deck[0];
+        $data["dealer"] = [$deck[0], $dealerHand->getStatus()];
         array_splice($deck, 0, 1);
         $game->replaceCardDeck($deck);
         $em->persist($game);

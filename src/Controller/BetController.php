@@ -27,6 +27,7 @@ class BetController extends AbstractController
         $hand->setUser($this->getUser());
         $hand->setCreatedAt(new DateTimeImmutable());
         $hand->setUpdatedAt(new DateTimeImmutable());
+        $hand->setStatus("playing");
         $em->persist($hand);
         $em->flush();
         $bet = new Bet();

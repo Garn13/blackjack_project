@@ -16,7 +16,6 @@ class HandController extends AbstractController
     #[Route('/hand/create', name: 'app_hand')]
     public function create(Request $request, EntityManagerInterface $em, GameRepository $gameRepository): Response
     {
-        $hand = new Hand();
 
         return $this->render('hand/index.html.twig', [
             'controller_name' => 'HandController',

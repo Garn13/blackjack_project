@@ -36,6 +36,12 @@ class Hand
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $value = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
     public function __construct()
     {
         $this->bets = new ArrayCollection();
@@ -132,6 +138,56 @@ class Hand
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getValue(?int $value): self
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    public function setValue(?int $value): self
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    public function calculateValue(): array
+    {
+        $cards = $this->getCards();
+        $value = 0;
+        $isAs = false;
+        foreach ($cards as &$card) {
+            $substring = substr($card, 1);
+            if (!in_array($substring, ["j", "q", "k"])) {
+                $value += intval($substring);
+            } elseif ($substring == "1") {
+                $isAs = true;
+            } else {
+                $value += 10;
+            }
+        }
+        if ($isAs && $value == 10) {
+            $value = 21;
+            $isAs = "blackjack";
+        }
+
+        $returnedArray = [$value, $isAs];
+        return $returnedArray;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

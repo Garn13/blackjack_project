@@ -3,3 +3,14 @@
     justify-content: space-between; 
     margin-top: 30%;
 }
+
+#dealer-container{
+    margin: auto;
+    width: 50%;
+}
+
+#game{
+    position: absolute;
+    min-width:100%;
+    min-height:100%;
+}
