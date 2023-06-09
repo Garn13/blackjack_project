@@ -4,7 +4,7 @@
 
 {% block body %}
     {% for table in tables%}
-        <div>
+        <div class="table-container">
             <p>{{table.name}}</p>
             <p>{{table.minBet}}</p>
             <p>{{table.maxBet}}</p>
@@ -23,4 +23,9 @@
             {% endif %}
         </div>
     {% endfor %}
+    <div class="balance">
+        <div class="balance-container">
+            <p><b>balance: {{balance}}</b></p>
+        </div>
+    </div>
 {% endblock %}

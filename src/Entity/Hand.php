@@ -142,11 +142,9 @@ class Hand
         return $this;
     }
 
-    public function getValue(?int $value): self
+    public function getValue(): ?int
     {
-        $this->value = $value;
-
-        return $this;
+        return $this->value;
     }
 
     public function setValue(?int $value): self
@@ -160,24 +158,119 @@ class Hand
     {
         $cards = $this->getCards();
         $value = 0;
-        $isAs = false;
+        $nbAs = 0;
         foreach ($cards as &$card) {
-            $substring = substr($card, 1);
-            if (!in_array($substring, ["j", "q", "k"])) {
-                $value += intval($substring);
-            } elseif ($substring == "1") {
-                $isAs = true;
+            $cardFigure = substr($card, 1);
+            if (!in_array($cardFigure, ["j", "q", "k", "1"])) {
+                $value += intval($cardFigure);
+            } elseif ($cardFigure == "1") {
+                $nbAs++;
             } else {
                 $value += 10;
             }
         }
-        if ($isAs && $value == 10) {
+        if ($nbAs != 0 && $value == 10) {
             $value = 21;
-            $isAs = "blackjack";
+            $nbAs = "blackjack";
         }
 
-        $returnedArray = [$value, $isAs];
+        $returnedArray = [$value, $nbAs];
         return $returnedArray;
+    }
+
+    public function calculateDealerValue(): array
+    {
+        $cards = $this->getCards();
+        $value = 0;
+        $nbAs = 0;
+        foreach ($cards as &$card) {
+            $cardFigure = substr($card, 1);
+            if (!in_array($cardFigure, ["j", "q", "k", "1"])) {
+                $value += intval($cardFigure);
+            } elseif ($cardFigure == "1") {
+                if ($nbAs == 0) {
+                    $value += 11;
+                } elseif ($nbAs != 0) {
+                    if ($value + 11 > 21) {
+                        $value++;
+                    } else {
+                        $value += 11;
+                    }
+                }
+                $nbAs++;
+            } else {
+                $value += 10;
+            }
+        }
+        if ($nbAs != 0 && $value == 10) {
+            $value = 21;
+            $nbAs = "blackjack";
+        }
+
+        $returnedArray = [$value, $nbAs];
+        return $returnedArray;
+    }
+
+    public function calculateHitValue(): array
+    {
+        $cards = $this->getCards();
+        $newCard = end($cards);
+        $value = $this->getValue();
+        $nbAs = 0;
+        $status = $this->getStatus();
+
+        $cardFigure = substr($newCard, 1);
+        if (!in_array($cardFigure, ["j", "q", "k", "1"])) {
+            $value += intval($cardFigure);
+        } elseif ($cardFigure == "1") {
+            $nbAs++;
+        } else {
+            $value += 10;
+        }
+
+        if ($nbAs == 1) {
+            if ($value > 10) {
+                $value++;
+            } else {
+                $status = "choosing";
+            }
+        }
+
+        $returnedArray = [$value, $status];
+        return $returnedArray;
+    }
+
+    public function calculateDealerNewValue($newCard): ?int
+    {
+        $value = $this->getValue();
+        $cards = $this->getCards();
+        $nbAs = 0;
+
+        $cardFigure = substr($newCard, 1);
+        if (!in_array($cardFigure, ["j", "q", "k", "1"])) {
+            $value += intval($cardFigure);
+        } elseif ($cardFigure == "1") {
+            foreach ($cards as &$card) {
+                $oldCardFigure = substr($card, 1);
+                if ($oldCardFigure == "1") {
+                    $nbAs++;
+                }
+            }
+
+            if ($nbAs == 0) {
+                $value += 11;
+            } elseif ($nbAs > 0) {
+                if ($value + 11 > 21) {
+                    $value++;
+                } else {
+                    $value += 11;
+                }
+            }
+        } else {
+            $value += 10;
+        }
+
+        return $value;
     }
 
     public function getStatus(): ?string

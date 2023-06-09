@@ -9,21 +9,25 @@
         {% endblock %}
 
         {% block javascripts %}
-            <script src="{{ asset('js/main.js') }}" defer></script>
         {% endblock %}
     </head>
     <body>
-        {% if app.user %}
-            <a class="nav-link" href="{{ path('logout') }}">logout</a>
-            <a class="nav-link" href="{{ path('app_table') }}">Tables</a>
-            {% if is_granted("ROLE_ADMIN") %}
-                <a class="nav-link" href="{{ path('admin') }}">Admin</a>
-            {% endif %}
-        {% else %}
-            <a class="nav-link" href="{{ path('register') }}">register</a>
-            <a class="nav-link" href="{{ path('login') }}">login</a>
-        {% endif %}
-            <a class="nav-link" href="{{ path('home') }}">home</a>
+        <nav>
+            <ul>
+                {% if app.user %}
+                    <li><a class="nav-link" href="{{ path('logout') }}">logout</a></li>
+                    <li><a class="nav-link" href="{{ path('app_table') }}">Tables</a></li>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li><a class="nav-link" href="{{ path('admin') }}">Admin</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a class="nav-link" href="{{ path('register') }}">register</a></li>
+                    <li><a class="nav-link" href="{{ path('login') }}">login</a></li>
+                {% endif %}
+                    <li><a class="nav-link" href="{{ path('home') }}">home</a></li>
+                    <li><a class="nav-link" href="{{ path('ranking') }}">Ranking</a></li>
+            </ul>
+        </nav>
         {% block body %}{% endblock %}
     </body>
 </html>

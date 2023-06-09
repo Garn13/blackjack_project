@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Bet;
 use App\Entity\Hand;
+use App\Entity\User;
 use DateTimeImmutable;
 use App\Repository\GameRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +18,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class BetController extends AbstractController
 {
     #[Route('/bet/create', name: 'create_bet')]
-    public function create(Request $request, EntityManagerInterface $em, GameRepository $gameRepository): JsonResponse
+    public function create(Request $request, EntityManagerInterface $em, GameRepository $gameRepository, UserRepository $userRepository): JsonResponse
     {
+        $user = $userRepository->find($this->getUser());
         $game = $gameRepository->find($request->query->get('game'));
         if ($game->getStatus() == "ongoing") {
             return $this->json("error");
@@ -32,7 +35,11 @@ class BetController extends AbstractController
         $em->flush();
         $bet = new Bet();
         $maxBet = $game->getGameTable()->getMaxBet();
-        $bet->setBetAmmount($request->query->get('bet') > $maxBet ? $maxBet : $request->query->get('bet'));
+        $requestedBet = intval($request->query->get('bet'));
+        if ($requestedBet > $user->getBalance()) {
+            $requestedBet = $user->getBalance();
+        }
+        $bet->setBetAmmount($requestedBet > $maxBet ? $maxBet : $requestedBet);
         $bet->setHands($hand);
         $bet->setGame($game);
         $bet->setType("bet");
@@ -40,7 +47,11 @@ class BetController extends AbstractController
         $bet->setUpdatedAt(new DateTimeImmutable());
         $em->persist($bet);
         $em->flush();
-        $data = ['bet' => $bet->getId(), 'hand' => $hand->getId()];
+        $oldBalance = $user->getBalance();
+        $user->setBalance($oldBalance - $bet->getBetAmmount());
+        $em->persist($user);
+        $em->flush();
+        $data = ['bet' => $bet->getId(), 'hand' => $hand->getId(), 'betAmount' => $bet->getBetAmmount()];
         return $this->json($data);
     }
 }

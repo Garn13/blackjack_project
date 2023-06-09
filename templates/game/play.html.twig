@@ -2,17 +2,25 @@
 
 {% block title %}{{table.name}}{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('js/main.js') }}" defer></script>
+{% endblock %}
+
 
 {% block body %}
-<div id="game" data-table="{{table.id}}" data-game="{{game.id}}" data-image="{{ asset('images/6H.png') }}">
+<div id="game" data-table="{{table.id}}" data-game="{{game.id}}" data-minbet= {{table.minBet}} data-maxbet= {{table.maxBet}}>
     <h1>{{table.name}}</h1>
+    <h2> Dealer : </h2>
     <div id="dealer-container"></div>
+    <div id="result-container"></div>
+    <h2> Player : </h2>
     <div class="players-container">
-        <div class="hand"><button class="playButton" type="button">Jouer</button></div>
-        <div class="hand"><button class="playButton" type="button">Jouer</button></div>
-        <div class="hand"><button class="playButton" type="button">Jouer</button></div>
-        <div class="hand"><button class="playButton" type="button">Jouer</button></div>
-        <div class="hand"><button class="playButton" type="button">Jouer</button></div>
+        <div id="hand"><button id="playButton" type="button">Jouer</button></div>
+    </div>
+</div>
+<div class="balance">
+    <div class="balance-container">
+        <p><b>balance: {{balance}}</b></p>
     </div>
 </div>
 {% endblock %}

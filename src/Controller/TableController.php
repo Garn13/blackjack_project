@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Table;
 use DateTimeImmutable;
 use App\Form\TableType;
+use App\Repository\UserRepository;
 use App\Repository\TableRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TableController extends AbstractController
 {
     #[Route('/table', name: 'app_table')]
-    public function index(TableRepository $tableRepo): Response
+    public function index(TableRepository $tableRepo, UserRepository $userRepository): Response
     {
+        $user = $userRepository->find($this->getUser());
         $tables = $tableRepo->findAll();
         return $this->render('table/index.html.twig', [
-            'tables' => $tables,
+            'tables' => $tables, 'balance' => $user->getBalance(),
         ]);
     }
 
