@@ -1,31 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TableController!{% endblock %}
+{% block title %}Blackjack Project - Tables{% endblock %}
 
 {% block body %}
+    <div class="default-container">
+        <h1> Tables List <h1>
+    </div>
     {% for table in tables%}
-        <div class="table-container">
-            <p>{{table.name}}</p>
-            <p>{{table.minBet}}</p>
-            <p>{{table.maxBet}}</p>
-            <p>{{table.nbDecks}}</p>
-            <div>
-                <p><a href="{{path("create_game", {id: table.id}) }}"> Jouer à la table </a></p>
-            </div
+        <article class="table-container">
+            <h2>{{table.name}}</h2>
+            <p>minimum bet: {{table.minBet}}</p>
+            <p>maximum bet: {{table.maxBet}}</p>
+            <p>number of decks: {{table.nbDecks}}</p>
+            <p><a href="{{path("create_game", {id: table.id}) }}"> Jouer à la table </a></p>
             
             
             {% if app.user and is_granted("ROLE_ADMIN")%}
-                <div>
-                    <p><a href="{{path("edit_table", {id: table.id}) }}"> Modifier la table </a></p>
-                    <p><a href="{{path("delete_table", {id: table.id}) }}"> Supprimer la table </a></p>
-                    
-                </div>
+                <p><a href="{{path("edit_table", {id: table.id}) }}"> Modifier la table </a></p>
+                <p><a href="{{path("delete_table", {id: table.id}) }}"> Supprimer la table </a></p>
             {% endif %}
-        </div>
+        </article>
     {% endfor %}
     <div class="balance">
-        <div class="balance-container">
-            <p><b>balance: {{balance}}</b></p>
-        </div>
+        <p><b>balance: {{balance}}</b></p>
     </div>
 {% endblock %}

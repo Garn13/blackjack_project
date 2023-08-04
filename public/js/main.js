@@ -11,6 +11,9 @@ let playButton = document.getElementById("playButton");
 playButton.addEventListener("click", function(e){
     e.preventDefault();
     const div = playButton.parentElement
+    let label = document.createElement("label");
+    label.setAttribute("for", "betInput");
+    label.textContent = "Chose bet";
     let input = document.createElement("input");
     input.setAttribute("id", "betInput");
     input.setAttribute("type", "number");
@@ -18,8 +21,9 @@ playButton.addEventListener("click", function(e){
     input.setAttribute("max", maxBet);
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "betButton");
-    submitButton.textContent = "Miser";
+    submitButton.textContent = "Bet";
     playButton.remove();
+    div.appendChild(label);
     div.appendChild(input);
     div.appendChild(submitButton);
     submitButton.addEventListener("click", function(e){
@@ -32,6 +36,7 @@ playButton.addEventListener("click", function(e){
                 handDiv.dataset.bet = responseData.bet;
                 handDiv.dataset.hand = responseData.hand;
                 submitButton.remove();
+                label.remove();
                 input.remove();
                 let startButton = document.createElement("button");
                 startButton.setAttribute("id", "startButton");
@@ -59,8 +64,10 @@ playButton.addEventListener("click", function(e){
                         const card1 = document.createElement("img");
                         card1.src = "../images/"+ responseData[hand.dataset.hand][0][0] +".png"
                         card1.setAttribute("class", "card");
+                        card1.setAttribute("alt", cardAlt(responseData[hand.dataset.hand][0][0]));
                         const card2 = document.createElement("img");
                         card2.src = "../images/"+ responseData[hand.dataset.hand][0][1] +".png"
+                        card2.setAttribute("alt", cardAlt(responseData[hand.dataset.hand][0][1]));
                         card2.setAttribute("class", "card");
                         console.log(responseData[hand.dataset.hand][0][0])
                         div.appendChild(card1);
@@ -75,9 +82,11 @@ playButton.addEventListener("click", function(e){
                         let dealerDiv = document.getElementById("dealer-container");
                         const dealerCard1 = document.createElement("img");
                         dealerCard1.src = "../images/"+ responseData["dealer"][0] +".png"
+                        dealerCard1.setAttribute("alt", cardAlt(responseData["dealer"][0]));
                         dealerCard1.setAttribute("class", "card");
                         const dealerCard2 = document.createElement("img");
                         dealerCard2.src = "../images/back.png"
+                        dealerCard2.setAttribute("alt", "hidden card");
                         dealerCard2.setAttribute("class", "card");
                         dealerCardsDiv.appendChild(dealerCard1);
                         dealerCardsDiv.appendChild(dealerCard2);
@@ -141,6 +150,7 @@ const buttonsListeners = function(handId){
            const cardContainer = document.getElementById("cards-container");
            const newCard = document.createElement("img");
            newCard.src = "../images/"+ response["card"] +".png"
+           newCard.setAttribute("alt", cardAlt(response["card"]));
            newCard.setAttribute("class", "card");
            cardContainer.appendChild(newCard);
            const valueDiv = document.getElementById("value");
@@ -239,6 +249,7 @@ const DealerTurn = function(){
         response.cards.forEach(card => {
             const newCard = document.createElement("img");
            newCard.src = "../images/"+ card +".png"
+           newCard.setAttribute("alt", cardAlt(card));
            newCard.setAttribute("class", "card");
             div.appendChild(newCard);
         })
@@ -257,4 +268,168 @@ const DealerTurn = function(){
             resultDiv.appendChild(h1);
     });
 
+}
+
+const cardAlt = function (cardName){
+    switch (cardName) {
+        case "h1":
+          alt = "Ace of Heart"
+          break;
+        case "h2":
+          alt = "Two of Heart"
+          break;
+        case "h3":
+          alt = "Three of Heart"
+          break;
+        case "h4":
+          alt = "Four of Heart"
+          break;
+        case "h5":
+          alt = "Five of Heart"
+          break;
+        case "h6":
+          alt = "Six of Heart"
+          break;
+        case "h7":
+          alt = "Seven of Heart"
+          break;
+        case "h8":
+          alt = "Eight of Heart"
+          break;
+        case "h9":
+          alt = "Nine of Heart"
+          break;
+        case "h10":
+          alt = "Ten of Heart"
+          break;
+        case "hj":
+          alt = "Jack of Heart"
+          break;
+        case "hq":
+          alt = "Queen of Heart"
+          break;
+        case "hk":
+          alt = "King of Heart"
+          break;
+        case "d1":
+            alt = "Ace of Diamond"
+            break;
+        case "d2":
+            alt = "Two of Diamond"
+            break;
+        case "d3":
+            alt = "Three of Diamond"
+            break;
+        case "d4":
+            alt = "Four of Diamond"
+            break;
+        case "d5":
+            alt = "Five of Diamond"
+            break;
+        case "d6":
+            alt = "Six of Diamond"
+            break;
+        case "d7":
+            alt = "Seven of Diamond"
+            break;
+        case "d8":
+            alt = "Eight of Diamond"
+            break;
+        case "d9":
+            alt = "Nine of Diamond"
+            break;
+        case "d10":
+            alt = "Ten of Diamond"
+            break;
+        case "dj":
+            alt = "Jack of Diamond"
+            break;
+        case "dq":
+            alt = "Queen of Diamond"
+            break;
+        case "dk":
+            alt = "King of Diamond"
+            break;
+        case "s1":
+            alt = "Ace of Spade"
+            break;
+        case "s2":
+            alt = "Two of Spade"
+            break;
+        case "s3":
+            alt = "Three of Spade"
+            break;
+        case "s4":
+            alt = "Four of Spade"
+            break;
+        case "s5":
+            alt = "Five of Spade"
+            break;
+        case "s6":
+            alt = "Six of Spade"
+            break;
+        case "s7":
+            alt = "Seven of Spade"
+            break;
+        case "s8":
+            alt = "Eight of Spade"
+            break;
+        case "s9":
+            alt = "Nine of Spade"
+            break;
+        case "s10":
+            alt = "Ten of Spade"
+            break;
+        case "sj":
+            alt = "Jack of Spade"
+            break;
+        case "sq":
+            alt = "Queen of Spade"
+            break;
+        case "sk":
+            alt = "King of Spade"
+            break;
+        case "c1":
+            alt = "Ace of Clover"
+            break;
+        case "c2":
+            alt = "Two of Clover"
+            break;
+        case "c3":
+            alt = "Three of Clover"
+            break;
+        case "c4":
+            alt = "Four of Clover"
+            break;
+        case "c5":
+            alt = "Five of Clover"
+            break;
+        case "c6":
+            alt = "Six of Clover"
+            break;
+        case "c7":
+            alt = "Seven of Clover"
+            break;
+        case "c8":
+            alt = "Eight of Clover"
+            break;
+        case "c9":
+            alt = "Nine of Clover"
+            break;
+        case "c10":
+            alt = "Ten of Clover"
+            break;
+        case "cj":
+            alt = "Jack of Clover"
+            break;
+        case "cq":
+            alt = "Queen of Clover"
+            break;
+        case "ck":
+            alt = "King of Clover"
+            break;
+        default:
+            alt = "A card"
+    }
+    return alt;
 }

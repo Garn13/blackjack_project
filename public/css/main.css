@@ -1,3 +1,39 @@
+@keyframes slidingTextLeft {
+    from{
+        transform: translateX(-100%);
+    }
+
+    to{
+        transform: translateX(0);
+    }
+}
+
+@keyframes slidingTextRight {
+    from{
+        transform: translateX(100%);
+    }
+
+    to{
+        transform: translateX(0);
+    }
+}
+
+.sliding-left{
+    animation-name: slidingTextLeft;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+}
+
+.sliding-right{
+    animation-name: slidingTextRight;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+}
+
 *{
     padding: 0;
     margin: 0;
@@ -8,11 +44,10 @@
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
 }
 
 nav{
-    background: rgb(18, 48, 120);
+    background: rgb(235, 235, 235);
     height: 80px;
     width: 100%;
 }
@@ -29,7 +64,7 @@ nav ul li{
 }
 
 nav ul li a{
-    color: white;
+    color: black;
     font-size: 17px;
     padding: 7px 13px;
     border-radius: 3px;
@@ -52,8 +87,9 @@ input{
 }
 
 a:hover{
-    background: greenyellow;
-    transition: .5s;
+    background: rgb(172, 152, 42);
+    border-bottom-style: solid;
+    border-bottom-color: black;
 }
 
 
@@ -74,16 +110,27 @@ a:hover{
 }
 
 .balance {
-    background: rgb(55, 141, 226);
+    background: rgb(235, 235, 235);
     max-width: 20%;
-    position: absolute; top: 90%; left: 0%;
+    position: fixed; top: 90%; left: 1%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
     border-radius: 5px;
+    padding: 2px 16px;
 }
 
 .balance-container {
+    
     padding: 2px 16px;
+}
+
+.default-container{
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #f2f2f2;
+    padding: 50px;
+    margin-top: 20px;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 .table-container{
@@ -94,4 +141,31 @@ a:hover{
     margin-left: 30%;
     margin-right: 30%;
     margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+table {
+    margin:auto;
+    border-collapse: collapse;
+    border: 2px solid black;
+    letter-spacing: 1px;
+    font-size: 2rem;
+  }
+
+  td,
+  th {
+    border: 1px solid black;
+    padding: 7px 5px;
+  }
+  
+  th {
+    background-color: rgb(235, 235, 235);
+  }
+  
+  td {
+    text-align: center;
+  }
+
+p{
+    margin-top: 1%;
 }

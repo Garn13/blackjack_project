@@ -1,12 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello NavigationController!{% endblock %}
+{% block title %}Blackjack Project - Admin{% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/index.js') }}" defer></script>
    
 {% endblock %}
 
 {% block body %}
- <h1> Admin page! </h1>
- <a class="nav-link" href="{{ path('create_table') }}">Créer une table</a>
+<div class="default-container">
+    <h1> Admin page! </h1>
+    <section>
+    <p>
+    <a href="{{ path('create_table') }}">Créer une table</a>
+    </p>
+    </section>
+</div>
 {% endblock %}

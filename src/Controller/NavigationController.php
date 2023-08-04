@@ -13,9 +13,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class NavigationController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function home(UserRepository $userRepository): Response
+    public function home(): Response
     {
         return $this->render('navigation/home.html.twig', []);
+    }
+
+    #[Route('/rules', name: 'rules')]
+    public function rules(): Response
+    {
+        return $this->render('navigation/rules.html.twig', []);
     }
 
     #[Route('/admin', name: 'admin')]

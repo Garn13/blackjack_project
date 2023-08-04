@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{table.name}}{% endblock %}
+{% block title %}Blackjack Project - {{table.name}}{% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('js/main.js') }}" defer></script>
@@ -8,19 +8,23 @@
 
 
 {% block body %}
-<div id="game" data-table="{{table.id}}" data-game="{{game.id}}" data-minbet= {{table.minBet}} data-maxbet= {{table.maxBet}}>
-    <h1>{{table.name}}</h1>
-    <h2> Dealer : </h2>
-    <div id="dealer-container"></div>
-    <div id="result-container"></div>
+<section id="game" data-table="{{table.id}}" data-game="{{game.id}}" data-minbet= {{table.minBet}} data-maxbet= {{table.maxBet}}>
+    <div class="default-container">
+        <h1>{{table.name}}</h1>
+    </div>
+    <section class="default-container">
+        <h2> Dealer : </h2>
+        <div id="dealer-container"></div>
+    </section>
+    <section id="result-container"></section>
+    <section class="default-container">
     <h2> Player : </h2>
-    <div class="players-container">
-        <div id="hand"><button id="playButton" type="button">Jouer</button></div>
-    </div>
-</div>
+        <div class="players-container">
+            <div id="hand"><button id="playButton" type="button">Jouer</button></div>
+        </div>
+    <section>
+</section>
 <div class="balance">
-    <div class="balance-container">
-        <p><b>balance: {{balance}}</b></p>
-    </div>
+    <p><b>balance: {{balance}}</b></p>
 </div>
 {% endblock %}

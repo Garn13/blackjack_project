@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Blackjack Project{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             <link href="{{ asset('css/main.css') }}" rel="stylesheet">
@@ -12,22 +12,27 @@
         {% endblock %}
     </head>
     <body>
-        <nav>
-            <ul>
-                {% if app.user %}
-                    <li><a class="nav-link" href="{{ path('logout') }}">logout</a></li>
-                    <li><a class="nav-link" href="{{ path('app_table') }}">Tables</a></li>
-                    {% if is_granted("ROLE_ADMIN") %}
-                        <li><a class="nav-link" href="{{ path('admin') }}">Admin</a></li>
+        <header>
+            <nav>
+                <ul>
+                    <li><a class="nav-link" href="{{ path('home') }}"><b>Home</b></a></li>
+                    <li><a class="nav-link" href="{{ path('rules') }}"><b>Rules</b></a></li>
+                    <li><a class="nav-link" href="{{ path('ranking') }}"><b>Ranking</b></a></li>
+                    {% if app.user %}
+                        <li><a class="nav-link" href="{{ path('app_table') }}"><b>Tables</b></a></li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li><a class="nav-link" href="{{ path('admin') }}"><b>Admin</b></a></li>
+                        {% endif %}
+                        <li><a class="nav-link" href="{{ path('logout') }}"><b>Logout</b></a></li>
+                    {% else %}
+                        <li><a class="nav-link" href="{{ path('register') }}"><b>Register</b></a></li>
+                        <li><a class="nav-link" href="{{ path('login') }}"><b>Login</b></a></li>
                     {% endif %}
-                {% else %}
-                    <li><a class="nav-link" href="{{ path('register') }}">register</a></li>
-                    <li><a class="nav-link" href="{{ path('login') }}">login</a></li>
-                {% endif %}
-                    <li><a class="nav-link" href="{{ path('home') }}">home</a></li>
-                    <li><a class="nav-link" href="{{ path('ranking') }}">Ranking</a></li>
-            </ul>
-        </nav>
+                </ul>
+            </nav>
+        </header>
+        <main>
         {% block body %}{% endblock %}
+        </main>
     </body>
 </html>

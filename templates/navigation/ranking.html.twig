@@ -1,20 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TableController!{% endblock %}
+{% block title %}Blackjack Project - Ranking{% endblock %}
 
 {% block body %}
     
 <div class="table-container">
     <table>
+        <caption>
+            Ranking of the users
+        </caption>
         <thead>
             <tr>
-                <th colspan="2">Users Ranking</th>
+                <th scope="col">Rank</th>
+                <th scope="col">Username</th>
+                <th scope="col">Balance</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users%}
             <tr>
-                <td>{{ loop.index }}</td>
+                <td  scope="row">{{ loop.index }}</td>
                 <td>{{user.username}}</td>
                 <td>{{user.balance}}</td>
             </tr>
