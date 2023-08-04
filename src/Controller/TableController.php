@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TableController extends AbstractController
 {
-    #[Route('/table', name: 'app_table')]
+    #[Route('/blackjack-table', name: 'app_table')]
     public function index(TableRepository $tableRepo, UserRepository $userRepository): Response
     {
         $user = $userRepository->find($this->getUser());

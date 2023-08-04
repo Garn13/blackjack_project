@@ -12,12 +12,12 @@
             <p>minimum bet: {{table.minBet}}</p>
             <p>maximum bet: {{table.maxBet}}</p>
             <p>number of decks: {{table.nbDecks}}</p>
-            <p><a href="{{path("create_game", {id: table.id}) }}"> Jouer à la table </a></p>
+            <p><a href="{{path("create_game", {id: table.id}) }}"> Play at the table </a></p>
             
             
             {% if app.user and is_granted("ROLE_ADMIN")%}
-                <p><a href="{{path("edit_table", {id: table.id}) }}"> Modifier la table </a></p>
-                <p><a href="{{path("delete_table", {id: table.id}) }}"> Supprimer la table </a></p>
+                <p><a href="{{path("edit_table", {id: table.id}) }}"> Edit table </a></p>
+                <p><a href="{{path("delete_table", {id: table.id}) }}"> Delete table </a></p>
             {% endif %}
         </article>
     {% endfor %}

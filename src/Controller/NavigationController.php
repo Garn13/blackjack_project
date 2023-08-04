@@ -12,19 +12,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class NavigationController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    #[Route('/blackjack-home', name: 'home')]
     public function home(): Response
     {
         return $this->render('navigation/home.html.twig', []);
     }
 
-    #[Route('/rules', name: 'rules')]
+    #[Route('/blackjack-rules', name: 'rules')]
     public function rules(): Response
     {
         return $this->render('navigation/rules.html.twig', []);
     }
 
-    #[Route('/admin', name: 'admin')]
+    #[Route('/blackjack-admin', name: 'admin')]
     public function admin(): Response
     {
         return $this->render('navigation/admin.html.twig', [
@@ -32,7 +32,7 @@ class NavigationController extends AbstractController
         ]);
     }
 
-    #[Route('/ranking', name: 'ranking')]
+    #[Route('/blackjack-ranking', name: 'ranking')]
     public function ranking(UserRepository $userRepository): Response
     {
         $ranking = $userRepository->orderByBalance();

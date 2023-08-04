@@ -7,15 +7,16 @@
     {% if error %}
         <div>{{ error.message }}</div>
     {% endif %}
+    <section class="default-container">
+        <form action="{{ path('login') }}" method="post">
+            <label for="username">Email:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password"/>
 
 
-        <button type="submit">login</button>
-    </form>
+            <button type="submit">login</button>
+        </form>
+    </section>
 {% endblock %}

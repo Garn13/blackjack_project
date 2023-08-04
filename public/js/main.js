@@ -40,9 +40,9 @@ playButton.addEventListener("click", function(e){
                 input.remove();
                 let startButton = document.createElement("button");
                 startButton.setAttribute("id", "startButton");
-                startButton.textContent = "Commencer";
+                startButton.textContent = "Start";
                 let p = document.createElement("p");
-                p.textContent = "Mise: "+ responseData.betAmount;
+                p.textContent = "Bet: "+ responseData.betAmount;
                 handDiv.appendChild(p);
                 let dealerDiv = document.getElementById("dealer-container")
                 if (dealerDiv.querySelector('#startButton') === null){
@@ -75,7 +75,7 @@ playButton.addEventListener("click", function(e){
                         hand.prepend(div);
                         let divValue = document.createElement("div");
                         divValue.setAttribute("id", "value");
-                        divValue.textContent = "Valeur: "+ responseData[hand.dataset.hand][2];
+                        divValue.textContent = "Value: "+ responseData[hand.dataset.hand][2];
                         hand.appendChild(divValue);
 
                         let dealerCardsDiv = document.createElement("div");
@@ -94,7 +94,7 @@ playButton.addEventListener("click", function(e){
 
                         let divDealer = document.createElement("div");
                         divDealer.setAttribute("id", "value-dealer");
-                        divDealer.textContent = "Valeur: "+ responseData["dealer"][2];
+                        divDealer.textContent = "Value: "+ responseData["dealer"][2];
                         dealerDiv.appendChild(divDealer);
                         let status = responseData[hand.dataset.hand][1];
                         if (status == "playing"){
@@ -154,7 +154,7 @@ const buttonsListeners = function(handId){
            newCard.setAttribute("class", "card");
            cardContainer.appendChild(newCard);
            const valueDiv = document.getElementById("value");
-           valueDiv.textContent = "Valeur: "+ response["value"];
+           valueDiv.textContent = "Value: "+ response["value"];
            if (response["status"] === "choosing"){
                hitButton.remove();
                stayButton.remove();
@@ -182,6 +182,10 @@ const buttonsListeners = function(handId){
     });
     stayButton.addEventListener("click", function(e){
         e.preventDefault();
+        let hitButton = document.getElementById("hitButton");
+        let stayButton = document.getElementById("stayButton");
+        hitButton.remove();
+        stayButton.remove();
         DealerTurn();
         
     });
@@ -200,7 +204,7 @@ const choiceListeners = function(choice1, choice2){
         .then(response =>  response.json())
         .then((response) => {
             const divValue = document.getElementById("value");
-            divValue.textContent = "Valeur: "+ response.value;
+            divValue.textContent = "Value: "+ response.value;
             let hitButton = document.createElement("button");
             hitButton.setAttribute("id", "hitButton");
             hitButton.textContent = "Hit";
@@ -223,7 +227,7 @@ const choiceListeners = function(choice1, choice2){
         .then(response =>  response.json())
         .then((response) => {
             const divValue = document.getElementById("value");
-            divValue.textContent = "Valeur: "+ response.value;
+            divValue.textContent = "Value: "+ response.value;
             let hitButton = document.createElement("button");
             hitButton.setAttribute("id", "hitButton");
             hitButton.textContent = "Hit";
@@ -255,15 +259,20 @@ const DealerTurn = function(){
         })
         dealerContainer.replaceChildren(div);
         let message = "";
+        let color = "";
         if(response.result == "draw"){
             message = "DRAW!"
+            color = "blue"
         }else if(response.result == "lose"){
             message = "YOU LOSE!"
+            color = "red"
         }else if(response.result == "win"){
             message = "YOU WIN!"
+            color = "green"
         }
-        let h1 = document.createElement("h1");
+        let h1 = document.createElement("h2");
             h1.textContent = message
+            h1.style.color = color;
             let resultDiv = document.getElementById("result-container");
             resultDiv.appendChild(h1);
     });
