@@ -271,6 +271,7 @@ const DealerTurn = function(){
             color = "green"
         }
         let h1 = document.createElement("h2");
+            h1.classList.add("result-text")
             h1.textContent = message
             h1.style.color = color;
             let resultDiv = document.getElementById("result-container");

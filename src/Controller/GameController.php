@@ -65,10 +65,10 @@ class GameController extends AbstractController
         $playersHands = $handRepository->getPlayersHands($game->getId());
         $data = [];
         foreach ($playersHands as &$hand) {
-            $newHand = ["h1", "h7"];
+            $newHand = [];
             $deck = $game->getCardDeck();
-            // array_push($newHand, $deck[0], $deck[1]);
-            // array_splice($deck, 0, 2);
+            array_push($newHand, $deck[0], $deck[1]);
+            array_splice($deck, 0, 2);
             $game->replaceCardDeck($deck);
             $em->persist($game);
             $hand->setCards($newHand);
